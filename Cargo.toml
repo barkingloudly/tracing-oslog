@@ -3,7 +3,7 @@ name = "tracing-oslog"
 description = "A layer for tracing that outputs to the oslog on macOS/iOS"
 authors = ["Lucy <lucy@absolucy.moe>"]
 version = "0.1.2"
-edition = "2018"
+edition = "2021"
 license = "Zlib"
 categories = ["development-tools::debugging", "development-tools::profiling", "os::macos-apis"]
 keywords = ["tracing", "oslog", "os_log", "macos", "ios"]
@@ -18,9 +18,9 @@ tracing-core = "0.1"
 tracing-subscriber = "0.3"
 
 [build-dependencies]
-bindgen = "0.64"
-cc = "1.0"
+bindgen = "0.70"
+cc = "1.1"
 
 [package.metadata.docs.rs]
-default-target = "x86_64-apple-darwin"
+default-target = "aarch64-apple-darwin"
 targets = []

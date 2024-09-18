@@ -12,7 +12,7 @@ use crate::{
 use fnv::FnvHashMap;
 use once_cell::sync::Lazy;
 use parking_lot::Mutex;
-use std::{ffi::CString, ops::Deref};
+use std::{ffi::CString, ops::Deref, ptr::addr_of_mut};
 use tracing_core::{
 	span::{Attributes, Id},
 	Event, Level, Subscriber,
@@ -86,7 +86,7 @@ where
 					.extensions()
 					.get::<Activity>()
 					.expect("parent span didn't contain activity wtf"),
-				None => unsafe { &mut _os_activity_current as *mut _ },
+				None => unsafe { addr_of_mut!(_os_activity_current) as *mut _ },
 			};
 			let mut attributes = AttributeMap::default();
 			let mut attr_visitor = FieldVisitor::new(&mut attributes);
@@ -108,7 +108,7 @@ where
 			};
 			let activity = unsafe {
 				_os_activity_create(
-					&mut __dso_handle as *mut mach_header as *mut _,
+					addr_of_mut!(__dso_handle) as *mut mach_header as *mut _,
 					name.as_ptr(),
 					parent_activity,
 					os_activity_flag_t_OS_ACTIVITY_FLAG_DEFAULT,
